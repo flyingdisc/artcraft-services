@@ -25,6 +25,18 @@ const nextConfig: NextConfig = {
           permanent: false,
         }),
       ),
+      // LoopCraft is no longer offered: its old page and share images go to
+      // the Crafting Apps index.
+      {
+        source: "/apps/loopcraft",
+        destination: "/apps",
+        permanent: true,
+      },
+      {
+        source: "/images/apps/loopcraft/:file",
+        destination: "/apps",
+        permanent: true,
+      },
       // DrawCraft was renamed VectorCraft; the Crafting Apps READMEs still
       // link the old page.
       {
@@ -52,18 +64,6 @@ const nextConfig: NextConfig = {
         has: [{ type: "query", key: "media", value: "(?<token>.+)" }],
         destination: "/media/:token",
         permanent: true,
-      },
-    ];
-  },
-  // The hero wall uses WebGL video textures, which need CORS-clean sources.
-  // The showcase CDN sends no Access-Control-Allow-Origin header, so these
-  // clips use a same-origin proxy. Other marketing media lives in public/.
-  async rewrites() {
-    return [
-      // Showcase clips for the hero wall (see cdnMediaUrl in lib/links.ts).
-      {
-        source: "/cdn-media/:path*",
-        destination: "https://frontend-cdn.fakeyou.com/:path*",
       },
     ];
   },
